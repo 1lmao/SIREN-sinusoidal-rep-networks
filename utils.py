@@ -10,6 +10,9 @@ import cv2
 import meta_modules
 import scipy.io.wavfile as wavfile
 import cmapy
+from skimage.metrics import structural_similarity as compare_ssim
+from skimage.metrics import peak_signal_noise_ratio as compare_psnr
+import skimage
 
 
 def cond_mkdir(path):
@@ -185,8 +188,8 @@ def write_helmholtz_summary(model, model_input, gt, model_output, writer, total_
         writer.add_image(prefix + 'img', make_grid(dataio.lin2img(model_input['img_sub'])[:2,:1],
                                                                 scale_each=False, normalize=True),
                          global_step=total_steps)
-
-    if isinstance(model, meta_modules.NeuralProcessImplicit2DHypernetBVP):
+    #CHANGING NeuralProcessImplicit2DHypernetBVP to NeuralProcessImplicit2DHypernet
+    if isinstance(model, meta_modules.NeuralProcessImplicit2DHypernet):
         hypernet_activation_summary(model, model_input, gt, model_output, writer, total_steps, prefix)
 
 
@@ -582,9 +585,13 @@ def write_psnr(pred_img, gt_img, writer, iter, prefix):
         p = np.clip(p, a_min=0., a_max=1.)
 
         trgt = (trgt / 2.) + 0.5
-
-        ssim = skimage.measure.compare_ssim(p, trgt, multichannel=True, data_range=1)
-        psnr = skimage.measure.compare_psnr(p, trgt, data_range=1)
+        #print(f"Predicted shape: {p.shape}, Target shape: {trgt.shape}") 
+        p = p.reshape(p.shape[0], p.shape[1])
+        trgt = trgt.reshape(trgt.shape[0], trgt.shape[1])
+        #ssim = skimage.measure.compare_ssim(p, trgt, multichannel=True, data_range=1)
+        ssim = compare_ssim(p, trgt, multichannel=False, data_range=1, win_size=7)
+        #psnr = skimage.measure.compare_psnr(p, trgt, data_range=1)
+        psnr = compare_psnr(p, trgt, data_range=1)
 
         psnrs.append(psnr)
         ssims.append(ssim)

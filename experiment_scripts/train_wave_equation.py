@@ -45,8 +45,8 @@ source_coords = [0., 0., 0.]
 
 dataset = dataio.WaveSource(sidelength=340, velocity=opt.velocity,
                             source_coords=source_coords, pretrain=opt.pretrain)
-
-dataloader = DataLoader(dataset, shuffle=True, batch_size=opt.batch_size, pin_memory=True, num_workers=0)
+# Changed num_workers=0 to num_workers=8
+dataloader = DataLoader(dataset, shuffle=True, batch_size=opt.batch_size, pin_memory=True, num_workers=8)
 
 model = modules.SingleBVPNet(in_features=3, out_features=1, type=opt.model, mode=opt.mode,
                                 final_layer_factor=1., hidden_features=512, num_hidden_layers=3)

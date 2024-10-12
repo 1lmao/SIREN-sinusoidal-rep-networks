@@ -17,6 +17,7 @@ from matplotlib import animation
 
 def extract_images_from_summary(events_path, tag_names_to_look_for, suffix='', img_outdir=None, colormap=None):
     print("Extracting data from tensorboard summary...")
+    print(events_path+ " :SM")
     event_acc = event_accumulator.EventAccumulator(events_path, size_guidance={'images': 0})
     event_acc.Reload()
 
@@ -251,14 +252,14 @@ def make_convergence_plot(gt_dir, img_dirs, trgt_path, animate=False, iters_info
 
 def image_convergence_video():
     # Point each of the keys to the directory where you logged tensorboard summaries for this experiment.
-    summary_paths = {"ReLU": "",
-                     "Tanh": "",
-                     "ReLU P.E.": "",
-                     "RBF-ReLU": "",
-                     "SIREN": ""}
+    summary_paths = {"ReLU": "./logs/trial_1/summaries",
+                     "Tanh": "./logs/trial_1/summaries",
+                     "ReLU P.E.": "./logs/trial_1/summaries",
+                     "RBF-ReLU": "./logs/trial_1/summaries",
+                     "SIREN": "./logs/trial_1/summaries"}
 
     # This is the directory where all the images from the summaries will be extracted to.
-    image_extraction_dir = './data/image_summaries'
+    image_extraction_dir = './logs/trial_1/summaries'
     os.makedirs(image_extraction_dir, exist_ok=True)
 
     gt_tag_list = ['train_gt_img', 'train_gt_grad', 'train_gt_lapl']
@@ -273,16 +274,18 @@ def image_convergence_plot():
     animated = True
 
     # Point each of the keys to the directory where you logged tensorboard summaries for this experiment.
-    summary_paths = {"ReLU": "",
-                     "Tanh": "",
-                     "ReLU P.E.": "",
-                     "RBF-ReLU": "",
-                     "SIREN": ""}
+    summary_paths = {"ReLU": "./logs/trial_1/summaries",
+                     "Tanh": "./logs/trial_1/summaries",
+                     "ReLU P.E.": "./logs/trial_1/summaries",
+                     "RBF-ReLU": "./logs/trial_1/summaries",
+                     "SIREN": "./logs/trial_1/summaries"}
 
     # make convergence plot
     filename = 'image_psnr_convergence' + '.mp4' if animated else '.pdf'
 
-    make_convergence_plot(None, img_dirs=summary_paths, animate=animated,
+    # ADD DIRECTORY FOR CONVERGENCE PLOT
+    #make_convergence_plot(None, img_dirs=summary_paths, animate=animated,
+    make_convergence_plot('./logs/trial_1/summaries/gt', img_dirs=summary_paths, animate=animated,
                           trgt_path=filename, iters_info={'num_iters':15001, 'step':5}, plot_type='image')
 
 
@@ -298,6 +301,8 @@ def extract_image_psnrs(summary_paths):
 
 
 if __name__ == '__main__':
+    print("SM: Before CV")
     image_convergence_video()
+    print("SM: After CV")
     image_convergence_plot()
 

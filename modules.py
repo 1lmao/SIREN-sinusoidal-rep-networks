@@ -13,15 +13,26 @@ class BatchLinear(nn.Linear, MetaModule):
     hypernetwork.'''
     __doc__ = nn.Linear.__doc__
 
+    
     def forward(self, input, params=None):
         if params is None:
             params = OrderedDict(self.named_parameters())
 
         bias = params.get('bias', None)
         weight = params['weight']
+        #print(input.shape)
+        #mw = (weight.permute(*[i for i in range(len(weight.shape) - 2)], -1, -2).transpose(-1, -2))
+        mw = (weight.permute(*[i for i in range(len(weight.shape) - 2)], -1, -2))
+        #print(mw.shape)
+        #print(torch.isnan(input).any())
+        #print(torch.isinf(input).any())
+        #print(torch.isnan(mw).any())
+        #print(torch.isinf(mw).any())
 
-        output = input.matmul(weight.permute(*[i for i in range(len(weight.shape) - 2)], -1, -2))
+        #output=input.matmul(weight.permute(*[i for i in range(len(weight.shape) - 2)], -1, -2).transpose(-1, -2))
+        output = input.matmul(mw)
         output += bias.unsqueeze(-2)
+        #print(output.shape)
         return output
 
 

@@ -37,8 +37,8 @@ p.add_argument('--checkpoint_path', default=None, help='Checkpoint to trained mo
 opt = p.parse_args()
 
 # Dataset
-img_filepath1 = '/media/data4e/jnmartel/neural_bvps/gizeh.jpg'
-img_filepath2 = '/media/data4e/jnmartel/neural_bvps/bear.jpg'
+img_filepath1 = '/home/server/Desktop/siren/data/BSDS500-master/BSDS500/data/images/val/41033.jpg'
+img_filepath2 = '/home/server/Desktop/siren/data/BSDS500-master/BSDS500/data/images/val/41069.jpg'
 is_color = False
 coord_dataset = dataio.CompositeGradients(img_filepath1, img_filepath2, is_color=is_color,
                                           sidelength=512)

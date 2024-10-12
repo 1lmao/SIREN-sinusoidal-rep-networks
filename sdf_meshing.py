@@ -9,7 +9,6 @@ import skimage.measure
 import time
 import torch
 
-
 def create_mesh(
     decoder, filename, N=256, max_batch=64 ** 3, offset=None, scale=None
 ):

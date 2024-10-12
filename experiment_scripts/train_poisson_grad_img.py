@@ -42,7 +42,7 @@ if opt.dataset == 'camera':
     coord_dataset = dataio.Implicit2DWrapper(img_dataset, sidelength=256, compute_diff='gradients')
 elif opt.dataset == 'bsd500':
     # you can select the image your like in idx to sample
-    img_dataset = dataio.BSD500ImageDataset(in_folder='../data/BSD500/train',
+    img_dataset = dataio.BSD500ImageDataset(in_folder='/home/server/Desktop/siren/data/BSDS500-master/BSDS500/data/images/train',
                                             idx_to_sample=[19])
     coord_dataset = dataio.Implicit2DWrapper(img_dataset, sidelength=256, compute_diff='gradients')
 

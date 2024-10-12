@@ -41,7 +41,7 @@ p.add_argument('--checkpoint_path', default=None, help='Checkpoint to trained mo
 opt = p.parse_args()
 
 if opt.dataset == 'cat':
-    video_path = './data/video_512.npy'
+    video_path = '/home/server/Desktop/siren/data/cat_video.mp4'
 elif opt.dataset == 'bikes':
     video_path = skvideo.datasets.bikes()
 
