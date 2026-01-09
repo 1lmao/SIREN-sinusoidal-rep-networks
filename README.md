@@ -5,7 +5,7 @@
 - **RAM:** 16GB
 
 ## TLDR:
-- Debugged code so it run properly
+- Debugged code so it runs properly.
 - README.md is updated with better instructions.
 
 
